@@ -1,5 +1,6 @@
 import DefaultTheme from 'vitepress/theme'
 import Layout from './Layout.vue'
+import Twikoo from './Twikoo.vue'
 import './custom.css'
 
 // 手风琴效果：展开一个一级模块时，自动收起其他已展开的模块。
@@ -30,5 +31,8 @@ setupSidebarAccordion()
 
 export default {
   extends: DefaultTheme,
-  Layout
+  Layout,
+  enhanceApp({ app }) {
+    app.component('Twikoo', Twikoo)
+  }
 }

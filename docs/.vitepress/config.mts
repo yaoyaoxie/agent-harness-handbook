@@ -39,6 +39,7 @@ export default defineConfig({
       { text: '论文精读', link: '/papers/' },
       { text: '实践指南', link: '/practice/build-your-own' },
       { text: '求职与 JD 分析', link: '/career/' },
+      { text: '学习论坛', link: '/community/' },
       { text: '资源', link: '/resources/glossary' }
     ],
 
@@ -186,6 +187,17 @@ export default defineConfig({
             }
           ]
         },
+      {
+        text: '学习论坛',
+        collapsed: true,
+        items: [
+          { text: '社区指南', link: '/community/' },
+          { text: '求助问答', link: '/community/qa' },
+          { text: '学习打卡', link: '/community/checkin' },
+          { text: '经验分享', link: '/community/share' },
+          { text: '内容许愿池', link: '/community/wishes' }
+        ]
+      },
       {
         text: '资源',
         collapsed: true,

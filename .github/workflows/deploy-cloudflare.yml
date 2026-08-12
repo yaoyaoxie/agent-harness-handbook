@@ -1,0 +1,50 @@
+name: Deploy to Cloudflare Pages
+
+# 国内访问镜像：同一内容部署到 Cloudflare Pages（国内可达性优于 GitHub Pages）。
+# 启用条件：在仓库 Secrets 中配置 CLOUDFLARE_API_TOKEN 与 CLOUDFLARE_ACCOUNT_ID，
+# 未配置时部署步骤自动跳过，不影响 GitHub Pages 主部署。
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-cf
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with VitePress
+        env:
+          # Cloudflare Pages 是独立域名（<project>.pages.dev），根路径即可
+          SITE_URL: https://agent-harness-handbook.pages.dev
+        run: npm run docs:build
+
+      - name: Deploy to Cloudflare Pages
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # 项目不存在时 wrangler 会自动创建
+          command: pages deploy docs/.vitepress/dist --project-name=agent-harness-handbook
