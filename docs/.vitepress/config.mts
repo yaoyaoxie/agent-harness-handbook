@@ -139,7 +139,7 @@ export default defineConfig({
     },
 
     outline: {
-      level: [2, 3],
+      level: 2,
       label: '本页目录'
     },
 
