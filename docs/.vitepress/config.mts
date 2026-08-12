@@ -23,11 +23,12 @@ export default defineConfig({
     ['meta', { property: 'og:title', content: 'Agent Harness 手册' }],
     ['meta', { property: 'og:description', content: '系统拆解 AI 智能体骨架（Agent Harness）的设计与实现' }],
     ['meta', { property: 'og:locale', content: 'zh_CN' }],
-    ['meta', { property: 'og:url', content: siteUrl }]
+    ['meta', { property: 'og:url', content: siteUrl }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}logo.svg` }]
   ],
 
   themeConfig: {
-    logo: '🛠️',
+    logo: '/logo.svg',
     siteTitle: 'Agent Harness 手册',
 
     nav: [

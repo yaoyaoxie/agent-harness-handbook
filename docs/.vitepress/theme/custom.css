@@ -1,0 +1,49 @@
+/* Agent Harness 手册 · 品牌视觉
+   主色：挽具橙（琥珀 →  burnt orange），取「马具/工匠」的暖色调，
+   与 VitePress 默认紫拉开辨识度。 */
+
+:root {
+  --vp-c-brand-1: #d97706;
+  --vp-c-brand-2: #ea580c;
+  --vp-c-brand-3: #c2410c;
+  --vp-c-brand-soft: rgba(234, 88, 12, 0.14);
+
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(120deg, #f59e0b 20%, #c2410c 80%);
+  --vp-home-hero-image-background-image: linear-gradient(135deg, #fbbf24 0%, #ea580c 100%);
+  --vp-home-hero-image-filter: blur(72px);
+}
+
+.dark {
+  --vp-c-brand-1: #fbbf24;
+  --vp-c-brand-2: #f59e0b;
+  --vp-c-brand-3: #d97706;
+  --vp-c-brand-soft: rgba(251, 191, 36, 0.16);
+
+  --vp-home-hero-name-background: linear-gradient(120deg, #fde68a 10%, #f59e0b 90%);
+}
+
+/* 首页 hero：logo 后面的光晕 */
+.VPHome .VPHero .image-bg {
+  opacity: 0.55;
+}
+
+/* 首页 feature 卡片：hover 轻微上浮 + 品牌色描边 */
+.VPHome .VPFeatures .VPFeature {
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.VPHome .VPFeatures .VPFeature:hover {
+  transform: translateY(-3px);
+  border-color: var(--vp-c-brand-2);
+  box-shadow: 0 8px 24px rgba(234, 88, 12, 0.12);
+}
+
+.VPHome .VPFeatures .VPFeature .icon {
+  font-size: 28px;
+}
+
+/* 正文链接hover更顺滑 */
+.vp-doc a {
+  transition: color 0.2s ease;
+}
