@@ -42,11 +42,11 @@ export default defineConfig({
       { text: '资源', link: '/resources/glossary' }
     ],
 
-    sidebar: {
-      '/guide/': [
-        {
-          text: '导读',
-          items: [
+    sidebar: [
+      {
+        text: '导读',
+        collapsed: true,
+        items: [
             {
               text: '先看这里',
               collapsed: false,
@@ -65,12 +65,11 @@ export default defineConfig({
               ]
             }
           ]
-        }
-      ],
-      '/components/': [
-        {
-          text: '核心组件',
-          items: [
+        },
+      {
+        text: '核心组件',
+        collapsed: true,
+        items: [
             {
               text: '运转核心',
               collapsed: false,
@@ -100,12 +99,11 @@ export default defineConfig({
               ]
             }
           ]
-        }
-      ],
-      '/case-studies/': [
-        {
-          text: '经典案例',
-          items: [
+        },
+      {
+        text: '经典案例',
+        collapsed: true,
+        items: [
             {
               text: '国外产品',
               collapsed: false,
@@ -129,22 +127,20 @@ export default defineConfig({
               ]
             }
           ]
-        }
-      ],
-      '/papers/': [
-        {
-          text: '论文精读',
-          items: [
-            { text: '论文地图', link: '/papers/' },
-            { text: '经典论文精读', link: '/papers/core-papers' },
-            { text: '前沿进展', link: '/papers/frontier' }
-          ]
-        }
-      ],
-      '/practice/': [
-        {
-          text: '实践指南',
-          items: [
+        },
+      {
+        text: '论文精读',
+        collapsed: true,
+        items: [
+          { text: '论文地图', link: '/papers/' },
+          { text: '经典论文精读', link: '/papers/core-papers' },
+          { text: '前沿进展', link: '/papers/frontier' }
+        ]
+      },
+      {
+        text: '实践指南',
+        collapsed: true,
+        items: [
             {
               text: '动手路线',
               collapsed: false,
@@ -166,12 +162,11 @@ export default defineConfig({
               ]
             }
           ]
-        }
-      ],
-      '/career/': [
-        {
-          text: '求职与 JD 分析',
-          items: [
+        },
+      {
+        text: '求职与 JD 分析',
+        collapsed: true,
+        items: [
             {
               text: '看清市场',
               collapsed: false,
@@ -190,19 +185,17 @@ export default defineConfig({
               ]
             }
           ]
-        }
-      ],
-      '/resources/': [
-        {
-          text: '资源',
-          items: [
-            { text: '术语表', link: '/resources/glossary' },
-            { text: '精选资源清单', link: '/resources/awesome' },
-            { text: '系统提示词档案', link: '/resources/prompt-archive' }
-          ]
-        }
-      ]
-    },
+        },
+      {
+        text: '资源',
+        collapsed: true,
+        items: [
+          { text: '术语表', link: '/resources/glossary' },
+          { text: '精选资源清单', link: '/resources/awesome' },
+          { text: '系统提示词档案', link: '/resources/prompt-archive' }
+        ]
+      }
+    ],
 
     outline: false,
 
