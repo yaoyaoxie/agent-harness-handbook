@@ -47,11 +47,23 @@ export default defineConfig({
         {
           text: '导读',
           items: [
-            { text: '学习路径：三条路线', link: '/guide/paths' },
-            { text: '什么是 Agent Harness', link: '/guide/what-is-harness' },
-            { text: '模型 vs 骨架：为什么 Harness 决定上限', link: '/guide/model-vs-harness' },
-            { text: '演进简史', link: '/guide/history' },
-            { text: '总体架构解剖', link: '/guide/anatomy' }
+            {
+              text: '先看这里',
+              collapsed: false,
+              items: [
+                { text: '学习路径：三条路线', link: '/guide/paths' },
+                { text: '什么是 Agent Harness', link: '/guide/what-is-harness' }
+              ]
+            },
+            {
+              text: '建立框架',
+              collapsed: false,
+              items: [
+                { text: '模型 vs 骨架：为什么 Harness 决定上限', link: '/guide/model-vs-harness' },
+                { text: '演进简史', link: '/guide/history' },
+                { text: '总体架构解剖', link: '/guide/anatomy' }
+              ]
+            }
           ]
         }
       ],
@@ -59,16 +71,34 @@ export default defineConfig({
         {
           text: '核心组件',
           items: [
-            { text: '智能体循环（Agent Loop）', link: '/components/agent-loop' },
-            { text: '上下文工程', link: '/components/context-engineering' },
-            { text: '工具系统与 MCP', link: '/components/tools' },
-            { text: '规划与任务分解', link: '/components/planning' },
-            { text: '记忆系统', link: '/components/memory' },
-            { text: '子代理与多智能体编排', link: '/components/subagents' },
-            { text: '权限、安全与人类在环', link: '/components/permissions' },
-            { text: '技能与知识注入', link: '/components/skills' },
-            { text: '评测与可观测性', link: '/components/observability' },
-            { text: '模型选型与成本工程', link: '/components/model-routing' }
+            {
+              text: '运转核心',
+              collapsed: false,
+              items: [
+                { text: '智能体循环（Agent Loop）', link: '/components/agent-loop' },
+                { text: '上下文工程', link: '/components/context-engineering' },
+                { text: '工具系统与 MCP', link: '/components/tools' },
+                { text: '规划与任务分解', link: '/components/planning' },
+                { text: '记忆系统', link: '/components/memory' }
+              ]
+            },
+            {
+              text: '协作与扩展',
+              collapsed: false,
+              items: [
+                { text: '子代理与多智能体编排', link: '/components/subagents' },
+                { text: '技能与知识注入', link: '/components/skills' },
+                { text: '模型选型与成本工程', link: '/components/model-routing' }
+              ]
+            },
+            {
+              text: '安全与质量',
+              collapsed: false,
+              items: [
+                { text: '权限、安全与人类在环', link: '/components/permissions' },
+                { text: '评测与可观测性', link: '/components/observability' }
+              ]
+            }
           ]
         }
       ],
@@ -76,16 +106,28 @@ export default defineConfig({
         {
           text: '经典案例',
           items: [
-            { text: 'Claude Code', link: '/case-studies/claude-code' },
-            { text: 'Cursor', link: '/case-studies/cursor' },
-            { text: 'SWE-agent', link: '/case-studies/swe-agent' },
-            { text: 'OpenHands', link: '/case-studies/openhands' },
-            { text: 'Aider', link: '/case-studies/aider' },
-            { text: 'Devin', link: '/case-studies/devin' },
-            { text: 'LangGraph', link: '/case-studies/langgraph' },
-            { text: '扣子（Coze）', link: '/case-studies/coze' },
-            { text: 'Manus', link: '/case-studies/manus' },
-            { text: 'Dify', link: '/case-studies/dify' }
+            {
+              text: '国外产品',
+              collapsed: false,
+              items: [
+                { text: 'Claude Code', link: '/case-studies/claude-code' },
+                { text: 'Cursor', link: '/case-studies/cursor' },
+                { text: 'SWE-agent', link: '/case-studies/swe-agent' },
+                { text: 'OpenHands', link: '/case-studies/openhands' },
+                { text: 'Aider', link: '/case-studies/aider' },
+                { text: 'Devin', link: '/case-studies/devin' },
+                { text: 'LangGraph', link: '/case-studies/langgraph' }
+              ]
+            },
+            {
+              text: '国内产品',
+              collapsed: false,
+              items: [
+                { text: '扣子（Coze）', link: '/case-studies/coze' },
+                { text: 'Manus', link: '/case-studies/manus' },
+                { text: 'Dify', link: '/case-studies/dify' }
+              ]
+            }
           ]
         }
       ],
@@ -103,14 +145,26 @@ export default defineConfig({
         {
           text: '实践指南',
           items: [
-            { text: '从零构建一个最小 Harness', link: '/practice/build-your-own' },
-            { text: '渐进式教程：三版跑起来', link: '/practice/harness-tutorial' },
-            { text: '从零搭一套 Agent 评测', link: '/practice/evals-in-practice' },
-            { text: '框架与平台怎么选', link: '/practice/framework-comparison' },
-            { text: '写好 CLAUDE.md / AGENTS.md', link: '/practice/writing-claude-md' },
-            { text: '作品集项目', link: '/practice/portfolio-projects' },
-            { text: 'Harness 设计原则', link: '/practice/design-principles' },
-            { text: '常见陷阱与反模式', link: '/practice/pitfalls' }
+            {
+              text: '动手路线',
+              collapsed: false,
+              items: [
+                { text: '从零构建一个最小 Harness', link: '/practice/build-your-own' },
+                { text: '渐进式教程：三版跑起来', link: '/practice/harness-tutorial' },
+                { text: '从零搭一套 Agent 评测', link: '/practice/evals-in-practice' },
+                { text: '作品集项目', link: '/practice/portfolio-projects' }
+              ]
+            },
+            {
+              text: '方法与决策',
+              collapsed: false,
+              items: [
+                { text: '框架与平台怎么选', link: '/practice/framework-comparison' },
+                { text: '写好 CLAUDE.md / AGENTS.md', link: '/practice/writing-claude-md' },
+                { text: 'Harness 设计原则', link: '/practice/design-principles' },
+                { text: '常见陷阱与反模式', link: '/practice/pitfalls' }
+              ]
+            }
           ]
         }
       ],
@@ -118,11 +172,23 @@ export default defineConfig({
         {
           text: '求职与 JD 分析',
           items: [
-            { text: '模块导读与岗位版图', link: '/career/' },
-            { text: 'JD 清单：国内外大厂在招岗位', link: '/career/jd-list' },
-            { text: 'JD 知识点拆解', link: '/career/knowledge-map' },
-            { text: '能力对标：简历该突出什么', link: '/career/resume-analysis' },
-            { text: '面试题库', link: '/career/interview-questions' }
+            {
+              text: '看清市场',
+              collapsed: false,
+              items: [
+                { text: '模块导读与岗位版图', link: '/career/' },
+                { text: 'JD 清单：国内外大厂在招岗位', link: '/career/jd-list' },
+                { text: 'JD 知识点拆解', link: '/career/knowledge-map' }
+              ]
+            },
+            {
+              text: '准备自己',
+              collapsed: false,
+              items: [
+                { text: '能力对标：简历该突出什么', link: '/career/resume-analysis' },
+                { text: '面试题库', link: '/career/interview-questions' }
+              ]
+            }
           ]
         }
       ],
