@@ -1,0 +1,41 @@
+name: Freshness check
+
+on:
+  schedule:
+    # 每月 1 日 09:07 北京时间（UTC 01:07）
+    - cron: '7 1 1 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run freshness check
+        run: python scripts/freshness_check.py
+
+      - name: Publish report to issue
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          gh label create freshness --color FBCA04 --description "保鲜巡检" --force
+          title="保鲜巡检报告（$(date +%Y-%m-%d)）"
+          existing=$(gh issue list --label freshness --state open --json number --jq '.[0].number // empty')
+          if [ -n "$existing" ]; then
+            gh issue comment "$existing" --body-file freshness-report.md
+            echo "commented on issue #$existing"
+          else
+            gh issue create --title "$title" --label freshness --body-file freshness-report.md
+          fi
