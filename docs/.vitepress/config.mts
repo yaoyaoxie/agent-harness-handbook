@@ -138,10 +138,7 @@ export default defineConfig({
       ]
     },
 
-    outline: {
-      level: 2,
-      label: '本页目录'
-    },
+    outline: false,
 
     search: {
       provider: 'local',
