@@ -66,7 +66,8 @@ export default defineConfig({
             { text: '子代理与多智能体编排', link: '/components/subagents' },
             { text: '权限、安全与人类在环', link: '/components/permissions' },
             { text: '技能与知识注入', link: '/components/skills' },
-            { text: '评测与可观测性', link: '/components/observability' }
+            { text: '评测与可观测性', link: '/components/observability' },
+            { text: '模型选型与成本工程', link: '/components/model-routing' }
           ]
         }
       ],
@@ -104,6 +105,8 @@ export default defineConfig({
             { text: '从零构建一个最小 Harness', link: '/practice/build-your-own' },
             { text: '渐进式教程：三版跑起来', link: '/practice/harness-tutorial' },
             { text: '从零搭一套 Agent 评测', link: '/practice/evals-in-practice' },
+            { text: '框架与平台怎么选', link: '/practice/framework-comparison' },
+            { text: '写好 CLAUDE.md / AGENTS.md', link: '/practice/writing-claude-md' },
             { text: 'Harness 设计原则', link: '/practice/design-principles' },
             { text: '常见陷阱与反模式', link: '/practice/pitfalls' }
           ]
