@@ -13,8 +13,8 @@ hero:
       text: 什么是 Agent Harness？
       link: /guide/what-is-harness
     - theme: alt
-      text: 总体架构解剖
-      link: /guide/anatomy
+      text: 选一条学习路径
+      link: /guide/paths
     - theme: alt
       text: 动手构建
       link: /practice/build-your-own
@@ -49,6 +49,16 @@ features:
     details: 术语表与精选资源清单——框架、工具链与必读博客文章。
     link: /resources/glossary
 ---
+
+## 从哪开始？
+
+不想迷路的话，直接选一条路线——[学习路径页](/guide/paths)把全站 40+ 篇内容排成了三条明确的路线：
+
+- **求职冲刺（约 2 周）**：1–3 个月内要面试的人，直奔 JD 对标、简历改写与面试题库
+- **系统转行（约 6 周）**：时间充裕想打牢底子，从导读到实践分周推进，每周有检验标准
+- **案头速查**：在职建造者不通读，按「问题 → 页面」索引即查即走
+
+学完想验证成果？[三个能写进简历的作品集项目](/practice/portfolio-projects)，每个都标注了覆盖哪些大厂 JD 的高频要求。
 
 ## 什么是 Harness？
 

@@ -47,6 +47,7 @@ export default defineConfig({
         {
           text: '导读',
           items: [
+            { text: '学习路径：三条路线', link: '/guide/paths' },
             { text: '什么是 Agent Harness', link: '/guide/what-is-harness' },
             { text: '模型 vs 骨架：为什么 Harness 决定上限', link: '/guide/model-vs-harness' },
             { text: '演进简史', link: '/guide/history' },
@@ -107,6 +108,7 @@ export default defineConfig({
             { text: '从零搭一套 Agent 评测', link: '/practice/evals-in-practice' },
             { text: '框架与平台怎么选', link: '/practice/framework-comparison' },
             { text: '写好 CLAUDE.md / AGENTS.md', link: '/practice/writing-claude-md' },
+            { text: '作品集项目', link: '/practice/portfolio-projects' },
             { text: 'Harness 设计原则', link: '/practice/design-principles' },
             { text: '常见陷阱与反模式', link: '/practice/pitfalls' }
           ]
