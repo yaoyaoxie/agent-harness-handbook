@@ -28,7 +28,7 @@ FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 DATA_AS_OF_RE = re.compile(r"^dataAsOf:\s*([0-9]{4}-[0-9]{2})\s*$", re.M)
 LINK_RE = re.compile(r"\[[^\]]*\]\(<(https?://[^>]+)>\)|\[[^\]]*\]\((https?://[^)\s]+)\)|(https?://[^\s)\]>\"']+)")
 
-UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 freshness-bot"
+UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36"
 CTX = ssl.create_default_context()
 
 

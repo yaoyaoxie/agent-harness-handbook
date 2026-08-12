@@ -47,7 +47,7 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 | Amazon AWS | Applied Scientist II, AWS Agentic AI | Santa Clara | 官方全文 | [JD](https://amazon.jobs/en/jobs/10431050/applied-scientist-ii-amazon-aws-agentic-ai-aws-ai-fundamental-research) |
 | Amazon AWS | Senior Applied Scientist, Agentic WorkSpaces AI | NY / Seattle | 官方全文 | [JD](https://amazon.jobs/en/jobs/10495107/senior-applied-scientist-agentic-workspaces-ai) |
 | Notion | Software Engineer, Early Career (AI) | SF Hybrid | 官方全文 | [JD](https://jobs.ashbyhq.com/notion/85947779-6b87-466a-98bc-30a640448c28) |
-| Meta ⚠️ | Software Engineer, AI Native | New York | 聚合站镜像 | [JD](https://pitchmeai.com/jobs/meta/ai-native-software-engineer-iq5670a6eg) |
+| Meta ⚠️ | Software Engineer, AI Native | New York | 聚合站镜像 | [官方招聘站检索](https://www.metacareers.com/jobs/?q=AI%20Native) |
 | Notion ⚠️ | Forward Deployed Engineer, GTM - Japan | Tokyo | 聚合站快照 | [JD](https://ranked.jp/en/japan/tokyo/software-and-it-jobs/forward-deployed-engineer-gtm-japan-d575a5/) |
 
 ### 国内（12 家公司，27 个岗位条目）
@@ -185,7 +185,7 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 **Meta — Software Engineer, AI Native**（New York）⚠️ 聚合站镜像官方 JD（metacareers.com 为 SPA 无法直接抓取）。
 - 职责（镜像文本）：① 把 LLM/generative AI 集成进产品："prompt engineering, structured prompting, and context management"；② 实现 RAG 模式（embeddings + retrieval）；③ "Design/Contribute to agentic workflows"，含 human-in-the-loop 设计；④ 建立 AI 特性的 evaluation/QA、monitoring 与 feedback loops；⑤ 开发对接 model serving 层的可复用组件。
 - 要求（镜像文本）：CS/CE 本科或同等实践；2+ 年编程经验；有使用 LLM、agents 增强工作流的经验；加分：fine-tuning、few-shot/zero-shot、agent orchestration、Responsible AI。
-- 薪资：聚合站显示约 $181,000/年（base，未经官方确认） ｜ [JD 镜像](https://pitchmeai.com/jobs/meta/ai-native-software-engineer-iq5670a6eg) · 聚合站镜像 ⚠️
+- 薪资：聚合站显示约 $181,000/年（base，未经官方确认） ｜ [官方招聘站检索](https://www.metacareers.com/jobs/?q=AI%20Native)（原聚合站镜像已失效，2026-08-12 巡检替换）· 聚合站镜像 ⚠️
 
 **Notion — Forward Deployed Engineer, GTM - Japan**（Tokyo）⚠️ 聚合站快照（2026-07-02 发布，标注 "Source: Original posting"）。
 - 职责（快照摘要，信息量有限）："Lead complex customer engineering engagements, integrating Notion with third party systems and tools, and deploying AI solutions"；帮客户部署、集成 Notion 及其 AI agents。
