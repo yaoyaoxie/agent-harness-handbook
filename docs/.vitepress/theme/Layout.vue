@@ -1,16 +1,12 @@
 <script setup>
 import DefaultTheme from 'vitepress/theme'
 import { useData } from 'vitepress'
-import SidebarOutline from './SidebarOutline.vue'
 
 const { frontmatter } = useData()
 </script>
 
 <template>
   <DefaultTheme.Layout>
-    <template #sidebar-nav-after>
-      <SidebarOutline />
-    </template>
     <template #doc-before>
       <div v-if="frontmatter.dataAsOf" class="data-asof">
         本页含时效性内容，数据截止于 <strong>{{ frontmatter.dataAsOf }}</strong
