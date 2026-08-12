@@ -26,7 +26,7 @@ REPORT = ROOT / "freshness-report.md"
 
 FRONTMATTER_RE = re.compile(r"\A---\n(.*?)\n---\n", re.S)
 DATA_AS_OF_RE = re.compile(r"^dataAsOf:\s*([0-9]{4}-[0-9]{2})\s*$", re.M)
-LINK_RE = re.compile(r"\[[^\]]*\]\((https?://[^)\s]+)\)|(https?://[^\s)\]>\"']+)")
+LINK_RE = re.compile(r"\[[^\]]*\]\(<(https?://[^>]+)>\)|\[[^\]]*\]\((https?://[^)\s]+)\)|(https?://[^\s)\]>\"']+)")
 
 UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 freshness-bot"
 CTX = ssl.create_default_context()
@@ -50,7 +50,7 @@ def extract_links(md: Path) -> list[str]:
     text = md.read_text(encoding="utf-8")
     links = []
     for m in LINK_RE.finditer(text):
-        url = (m.group(1) or m.group(2)).rstrip(".,;:")
+        url = next(g for g in m.groups() if g).rstrip(".,;:")
         if "localhost" not in url:
             links.append(url)
     return sorted(set(links))
