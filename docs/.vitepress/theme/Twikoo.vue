@@ -4,8 +4,8 @@
 // 部署后只需把下面的 TWIKOO_ENV_ID 换成你的 CloudBase 环境 ID。
 import { ref, onMounted } from 'vue'
 
-// TODO(部署后替换): 腾讯云 CloudBase 环境 ID，形如 https://xxx-1234567890.tcb.qcloud.la
-const TWIKOO_ENV_ID = 'YOUR_TCB_ENV_ID'
+// 腾讯云 CloudBase 环境 HTTP 访问地址（Twikoo 云函数）
+const TWIKOO_ENV_ID = 'https://harness-forum-d8gq5gty47c89c481.service.tcloudbase.com/twikoo'
 
 const el = ref(null)
 
