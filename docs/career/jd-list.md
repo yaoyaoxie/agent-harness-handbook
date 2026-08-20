@@ -35,9 +35,9 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 | --- | --- | --- | --- | --- |
 | Anthropic | Applied AI Engineer, Enterprise Tech | SF / NYC / Seattle | 官方全文 | [JD](https://job-boards.greenhouse.io/anthropic/jobs/5057647008) |
 | Anthropic | Applied AI Engineer | London | 官方全文 | [JD](https://job-boards.greenhouse.io/anthropic/jobs/5116274008) |
-| OpenAI | Forward Deployed Engineer (FDE) | NYC | 官方全文 | [JD](<https://openai.com/careers/forward-deployed-engineer-(fde)-nyc-new-york-city/>) |
-| OpenAI | Research Engineer, Applied AI Engineering | SF | 官方全文 | [JD](https://openai.com/careers/research-engineer-applied-ai-engineering-san-francisco/) |
-| Microsoft | MTS, Forward Deployed AI Engineer, Health | New York | 官方全文 | [JD](https://microsoft.ai/job/member-of-technical-staff-software-engineer-health-ai-3/) |
+| OpenAI | Forward Deployed Engineer (FDE) ⚠️ 已下线 | NYC | 官方全文 | [JD](<https://openai.com/careers/forward-deployed-engineer-(fde)-nyc-new-york-city/>) |
+| OpenAI | Research Engineer, Applied AI Engineering ⚠️ 已下线 | SF | 官方全文 | [JD](https://openai.com/careers/research-engineer-applied-ai-engineering-san-francisco/) |
+| Microsoft | MTS, Forward Deployed AI Engineer, Health ⚠️ 已下线 | New York | 官方全文 | [JD](https://microsoft.ai/job/member-of-technical-staff-software-engineer-health-ai-3/) |
 | Google DeepMind | Research Engineer, Materials Science | 美国 | 官方全文 | [JD](https://job-boards.greenhouse.io/deepmind/jobs/7339890) |
 | Cognition | Applied AI Engineer | SF / NYC / London | 官方全文 | [JD](https://jobs.ashbyhq.com/cognition/811c3f5a-b26d-4162-b49b-93890a91794d) |
 | Cognition | Deployed Engineer | SF / NYC / Austin | 官方全文 | [JD](https://jobs.ashbyhq.com/cognition/d72d584c-bb11-4b6a-b043-d81425ea884a) |
@@ -46,10 +46,10 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 | Cursor (Anysphere) | Software Engineer, Agent Evaluation and Quality | SF / NY | 官方标题级 | [JD](https://www.cursor.com/careers) |
 | xAI | Backend Engineer | London | 官方全文 | [JD](https://job-boards.greenhouse.io/xai/jobs/4991448007) |
 | Amazon AWS | Applied Scientist II, AWS Agentic AI | Santa Clara | 官方全文 | [JD](https://amazon.jobs/en/jobs/10431050/applied-scientist-ii-amazon-aws-agentic-ai-aws-ai-fundamental-research) |
-| Amazon AWS | Senior Applied Scientist, Agentic WorkSpaces AI | NY / Seattle | 官方全文 | [JD](https://amazon.jobs/en/jobs/10495107/senior-applied-scientist-agentic-workspaces-ai) |
+| Amazon AWS | Senior Applied Scientist, Agentic WorkSpaces AI ⚠️ 已下线 | NY / Seattle | 官方全文 | [JD](https://amazon.jobs/en/jobs/10495107/senior-applied-scientist-agentic-workspaces-ai) |
 | Notion | Software Engineer, Early Career (AI) | SF Hybrid | 官方全文 | [JD](https://jobs.ashbyhq.com/notion/85947779-6b87-466a-98bc-30a640448c28) |
 | Meta ⚠️ | Software Engineer, AI Native | New York | 聚合站镜像 | [官方招聘站检索](https://www.metacareers.com/jobs/?q=AI%20Native) |
-| Notion ⚠️ | Forward Deployed Engineer, GTM - Japan | Tokyo | 聚合站快照 | [JD](https://ranked.jp/en/japan/tokyo/software-and-it-jobs/forward-deployed-engineer-gtm-japan-d575a5/) |
+| Notion ⚠️ | Forward Deployed Engineer, GTM - Japan ⚠️ 已下线 | Tokyo | 聚合站快照 | [JD](https://ranked.jp/en/japan/tokyo/software-and-it-jobs/forward-deployed-engineer-gtm-japan-d575a5/) |
 
 ### 国内（12 家公司，27 个岗位条目）
 
@@ -103,19 +103,19 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 
 ### OpenAI
 
-**Forward Deployed Engineer (FDE)**（New York City）—— 前沿模型在战略客户侧的端到端生产部署负责人。
+**Forward Deployed Engineer (FDE)**（New York City）⚠️ 已下线（2026-08-20 巡检）—— 前沿模型在战略客户侧的端到端生产部署负责人。
 - 职责：① 主导 discovery、technical scoping、system design、build 到 production rollout 全链路；② 以 production adoption 与 "eval-driven feedback that changes product and model roadmaps" 衡量成功；③ 亲自写代码（"Contribute directly in the code"），构建 full-stack 系统；④ 把有效模式沉淀为 tools、playbooks、building blocks；⑤ 与 Product、Research、GRC、Security、GTM 协作。
 - 要求：5+ 年工程或技术部署经验（含客户-facing）；Python/JavaScript 全栈 production 能力；"Have built or deployed systems powered by LLMs or generative models"；NYC hybrid，差旅最高 50%。
 - 薪资：JD 页未显示（第三方整理称 OpenAI SF FDE 区间 $162,000–$280,000，供参考） ｜ [JD](<https://openai.com/careers/forward-deployed-engineer-(fde)-nyc-new-york-city/>) · 官方全文
 
-**Research Engineer, Applied AI Engineering**（San Francisco）—— 把研究从 concept 推到 production 的应用研究工程岗。
+**Research Engineer, Applied AI Engineering**（San Francisco）⚠️ 已下线（2026-08-20 巡检）—— 把研究从 concept 推到 production 的应用研究工程岗。
 - 职责：① "Innovate and Deploy"：设计并部署解决真实问题的 ML 模型；② 实现可扩展 data pipelines，优化模型 performance 与 accuracy；③ 监控与维护已部署模型；④ 与 researchers、SWE、PM 协作交付 AI-powered solutions。
 - 要求：CS/ML/DS 相关硕士或博士；deep learning 与 transformers 经验；PyTorch 或 TensorFlow；熟悉 LLM 训练与微调（distillation、SFT、policy optimization）；search relevance / ads ranking / LLM 经验加分。
 - 薪资：未在抓取内容中显示 ｜ [JD](https://openai.com/careers/research-engineer-applied-ai-engineering-san-francisco/) · 官方全文
 
 ### Microsoft
 
-**Member of Technical Staff, Forward Deployed AI Engineer, Health**（New York）—— Microsoft AI × Mayo Clinic 医疗前沿模型合作的技术 lead（senior IC）。
+**Member of Technical Staff, Forward Deployed AI Engineer, Health**（New York）⚠️ 已下线（2026-08-20 巡检）—— Microsoft AI × Mayo Clinic 医疗前沿模型合作的技术 lead（senior IC）。
 - 职责：① "owning complex work from discovery and architecture through implementation, deployment, and operational adoption"；② 设计跨临床数据平台、API、身份边界、遗留系统的 integrations 与 data pipelines；③ "Architect and evaluate production AI systems that combine frontier models, context engineering, retrieval, tool use, orchestration, data platforms, and deterministic services"；④ 构建 health-specific evaluations 驱动决策；⑤ 沉淀 reusable infrastructure 与 paved paths。
 - 要求：CS 相关本科 + 6+ 年工程经验；分布式系统与数据平台；"production LLM or machine-learning systems, including context engineering, retrieval, tool use, orchestration, and evaluation" 经验；加分：Kubernetes、Databricks/Spark、IaC、observability、医疗/EHR 背景。
 - 薪资：IC5 $142,800–$274,800（NYC $188,000–$304,200）；IC6 $165,600–$296,400（NYC $220,800–$331,200） ｜ [JD](https://microsoft.ai/job/member-of-technical-staff-software-engineer-health-ai-3/) · 官方全文
@@ -169,7 +169,7 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 - 要求：PhD，或硕士 + 4+ 年相关经验；顶会/期刊论文或专利；C/C++、Python、Java；加分：production 软件开发、"Experience in building Agentic Applications and training GenAI models"。
 - 薪资：$171,600–$222,200/年 ｜ [JD](https://amazon.jobs/en/jobs/10431050/applied-scientist-ii-amazon-aws-agentic-ai-aws-ai-fundamental-research) · 官方全文
 
-**Senior Applied Scientist, Agentic WorkSpaces AI**（NY / Seattle）—— 企业桌面场景的 Agent 系统架构。
+**Senior Applied Scientist, Agentic WorkSpaces AI**（NY / Seattle）⚠️ 已下线（2026-08-20 巡检）—— 企业桌面场景的 Agent 系统架构。
 - 职责：① "Architect agentic AI systems that leverage LLMs, computer vision, and computer-use techniques to interact with legacy applications"；② "Build evaluation frameworks to quantify agent performance, reliability, and user impact"；③ Fine-tune 并部署领域 LLM，"ensuring efficiency, safety, and alignment with enterprise requirements"；④ 跨团队把 AI 能力嵌入 WorkSpaces 产品线。
 - 要求：5+ 年面向业务的 ML 建模经验；PhD 或硕士 + 6+ 年应用研究经验；Java/C++/Python；加分：computer-use automation、领域 LLM fine-tuning。
 - 薪资：NYC $183,800–$248,700；Seattle $167,100–$226,100 ｜ [JD](https://amazon.jobs/en/jobs/10495107/senior-applied-scientist-agentic-workspaces-ai) · 官方全文
@@ -188,7 +188,7 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 - 要求（镜像文本）：CS/CE 本科或同等实践；2+ 年编程经验；有使用 LLM、agents 增强工作流的经验；加分：fine-tuning、few-shot/zero-shot、agent orchestration、Responsible AI。
 - 薪资：聚合站显示约 $181,000/年（base，未经官方确认） ｜ [官方招聘站检索](https://www.metacareers.com/jobs/?q=AI%20Native)（原聚合站镜像已失效，2026-08-12 巡检替换）· 聚合站镜像 ⚠️
 
-**Notion — Forward Deployed Engineer, GTM - Japan**（Tokyo）⚠️ 聚合站快照（2026-07-02 发布，标注 "Source: Original posting"）。
+**Notion — Forward Deployed Engineer, GTM - Japan**（Tokyo）⚠️ 聚合站快照（2026-07-02 发布，标注 "Source: Original posting"；快照已 404，2026-08-20 巡检）。
 - 职责（快照摘要，信息量有限）："Lead complex customer engineering engagements, integrating Notion with third party systems and tools, and deploying AI solutions"；帮客户部署、集成 Notion 及其 AI agents。
 - 要求：未确认（东京 onsite；英语工作环境；提供签证赞助）。
 - 薪资：未公开 ｜ [JD 快照](https://ranked.jp/en/japan/tokyo/software-and-it-jobs/forward-deployed-engineer-gtm-japan-d575a5/) · 聚合站快照 ⚠️
@@ -384,6 +384,7 @@ JD 数据的可信度取决于来源，本清单严格分三级，**引用时先
 
 - **检索日期：2026 年 8 月**（国内 2026-08-11，国外 2026-08-11 至 08-12）。调研原始记录存于本仓库 `.scratch/jd-research/`（`intl.md` / `cn.md`）。
 - **岗位会下架。** 招聘市场是流动快照：本文写成时 Anthropic 另一知名岗位 "Forward Deployed Engineer, Applied AI"（greenhouse jobs/4985877008）页面已疑似下架未收录。**所有链接以各公司官方 careers 页当前状态为准**，失效请到官方招聘站按岗位名搜索。
+- **2026-08-20 复检**：对全部 43 条外链做了可用性巡检，5 个岗位已关闭（OpenAI FDE 纽约、OpenAI Applied AI 研究工程师、Microsoft 医疗 FDE、Amazon Agentic WorkSpaces、Notion FDE 日本——后者为聚合站快照 404），正文中已逐一标注「已下线」；其余链接仍可访问。岗位关闭不影响 JD 内容的参考价值——技能画像是慢变量。
 - 国内岗位薪资普遍未披露；标注 ⚠️ 的快照条目（含蚂蚁、MiniMax 的薪资数字）未经官方确认，请勿作为谈薪依据。
 - 聚合站快照可能滞后于官方更新；若官方页与快照冲突，以官方页为准。
 
