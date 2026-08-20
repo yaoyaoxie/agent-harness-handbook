@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: JD 清单：国内外大厂在招岗位
 dataAsOf: 2026-08
 description: 2026 年 8 月国内外 22 家公司 44 个 Agent/LLM 工程在招岗位完整清单：官方全文、官方标题级、聚合站快照三级来源标注，附总览速查表与失效免责说明。

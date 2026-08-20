@@ -43,11 +43,12 @@ export default defineConfig({
       { text: '资源', link: '/resources/glossary' }
     ],
 
-    sidebar: [
-      {
-        text: '导读',
-        collapsed: true,
-        items: [
+    sidebar: {
+      '/guide/': [
+        {
+          text: '导读',
+          collapsed: false,
+          items: [
             {
               text: '先看这里',
               collapsed: false,
@@ -66,11 +67,13 @@ export default defineConfig({
               ]
             }
           ]
-        },
-      {
-        text: '核心组件',
-        collapsed: true,
-        items: [
+        }
+      ],
+      '/components/': [
+        {
+          text: '核心组件',
+          collapsed: false,
+          items: [
             {
               text: '运转核心',
               collapsed: false,
@@ -100,11 +103,13 @@ export default defineConfig({
               ]
             }
           ]
-        },
-      {
-        text: '经典案例',
-        collapsed: true,
-        items: [
+        }
+      ],
+      '/case-studies/': [
+        {
+          text: '经典案例',
+          collapsed: false,
+          items: [
             {
               text: '国外产品',
               collapsed: false,
@@ -128,20 +133,27 @@ export default defineConfig({
               ]
             }
           ]
-        },
-      {
-        text: '论文精读',
-        collapsed: true,
-        items: [
-          { text: '论文地图', link: '/papers/' },
-          { text: '经典论文精读', link: '/papers/core-papers' },
-          { text: '前沿进展', link: '/papers/frontier' }
-        ]
-      },
-      {
-        text: '实践指南',
-        collapsed: true,
-        items: [
+        }
+      ],
+      '/papers/': [
+        {
+          text: '论文精读',
+          collapsed: false,
+          items: [
+            { text: '从这里开始', link: '/papers/' },
+            { text: '阅读路径', link: '/papers/paths' },
+            { text: '论文地图', link: '/papers/map' },
+            { text: '经典论文精读', link: '/papers/core-papers' },
+            { text: '前沿进展', link: '/papers/frontier' },
+            { text: '阅读纪律与 FAQ', link: '/papers/faq' }
+          ]
+        }
+      ],
+      '/practice/': [
+        {
+          text: '实践指南',
+          collapsed: false,
+          items: [
             {
               text: '动手路线',
               collapsed: false,
@@ -163,11 +175,13 @@ export default defineConfig({
               ]
             }
           ]
-        },
-      {
-        text: '求职与 JD 分析',
-        collapsed: true,
-        items: [
+        }
+      ],
+      '/career/': [
+        {
+          text: '求职与 JD 分析',
+          collapsed: false,
+          items: [
             {
               text: '看清市场',
               collapsed: false,
@@ -186,32 +200,31 @@ export default defineConfig({
               ]
             }
           ]
-        },
-      {
-        text: '学习论坛',
-        collapsed: true,
-        items: [
-          { text: '社区指南', link: '/community/' },
-          { text: '求助问答', link: '/community/qa' },
-          { text: '学习打卡', link: '/community/checkin' },
-          { text: '经验分享', link: '/community/share' },
-          { text: '内容许愿池', link: '/community/wishes' }
-        ]
-      },
-      {
-        text: '资源',
-        collapsed: true,
-        items: [
-          { text: '术语表', link: '/resources/glossary' },
-          { text: '精选资源清单', link: '/resources/awesome' },
-          { text: '系统提示词档案', link: '/resources/prompt-archive' }
-        ]
-      }
-    ],
+        }
+      ],
+      '/community/': [
+        {
+          text: '学习论坛',
+          collapsed: false,
+          items: [{ text: '圈子', link: '/community/' }]
+        }
+      ],
+      '/resources/': [
+        {
+          text: '资源',
+          collapsed: false,
+          items: [
+            { text: '术语表', link: '/resources/glossary' },
+            { text: '精选资源清单', link: '/resources/awesome' },
+            { text: '系统提示词档案', link: '/resources/prompt-archive' }
+          ]
+        }
+      ]
+    },
 
     outline: {
       level: [2, 3],
-      label: '本页目录'
+      label: '本页'
     },
 
     search: {

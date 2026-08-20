@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 总体架构解剖
 description: 一张图看懂 Agent Harness 的总体架构：用户、环境、智能体循环、八大组件与 LLM 的关系，附完整数据流走查与分角色阅读导航。
 ---
@@ -270,7 +271,7 @@ tools:     bash / read_file / edit_file / grep / todo_write 的 schema
 
 1. [模型 vs 骨架：为什么 Harness 决定上限](/guide/model-vs-harness) — 核心论点与证据
 2. [演进简史](/guide/history) — 从 ReAct 到今天的问题演化脉络
-3. [论文地图](/papers/) → [经典论文精读](/papers/core-papers) → [前沿进展](/papers/frontier)
+3. [论文地图](/papers/map) → [经典论文精读](/papers/core-papers) → [前沿进展](/papers/frontier)
 4. [SWE-agent](/case-studies/swe-agent) 与 [OpenHands](/case-studies/openhands) — ACI 与事件流两个研究味最浓的案例
 5. [评测与可观测性](/components/observability) — 做 agent 研究绕不开的实验方法论
 

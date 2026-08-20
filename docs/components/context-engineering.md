@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 上下文工程
 description: 上下文是 agent 最稀缺的资源，harness 的核心职责是决定每个 step 模型看到什么：解剖上下文的真实构成、poisoning/distraction/confusion/clash 四种失效模式、压缩与截断策略、KV cache 命中率的工程考量，以及 RAG 与 just-in-time 检索的取舍。
 ---

@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 智能体循环（Agent Loop）
 description: Agent Loop 是 Harness 的心脏：一个 while 循环如何组装上下文、调用模型、执行工具、处理错误并决定何时停止——从 ReAct 论文到生产级实现的完整拆解。
 ---

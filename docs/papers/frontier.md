@@ -138,7 +138,7 @@ description: 梳理 2025–2026 年 Agent Harness 研究的六条前沿主线：
 ## 延伸阅读
 
 - [经典论文精读](/papers/core-papers)——本页所有工作的前身：ReAct、Reflexion、MemGPT、SWE-agent
-- [论文地图](/papers/)——按主题组织的完整学术地图与阅读顺序
+- [论文地图](/papers/map)——按主题组织的完整学术地图
 - [什么是 Agent Harness](/guide/what-is-harness)——Confucius CCA 与 harness 披露檄文的详细解读
 - [上下文工程](/components/context-engineering)——Context Rot、recitation、压缩的工程化展开
 - [记忆系统](/components/memory)——A-MEM / Mem0 / MemOS 思想的产品形态

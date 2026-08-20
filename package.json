@@ -2,6 +2,7 @@
   "name": "agent-harness-handbook",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "description": "Agent Harness 权威学习网站：系统拆解 AI 智能体骨架的设计与实现",
   "scripts": {
     "docs:dev": "vitepress dev docs",

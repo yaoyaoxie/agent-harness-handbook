@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: Claude Code 案例
 description: 深度剖析 Claude Code 的 harness 设计：极简 Unix 风格工具集、TodoWrite 与 plan mode 的规划机制、CLAUDE.md 记忆文件、子代理、hooks、MCP 与权限模式，以及它为什么选择终端而非 IDE——本站组件框架在一个真实产品里的完整组合。
 ---

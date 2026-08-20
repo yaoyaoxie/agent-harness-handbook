@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 从零构建一个最小 Harness
 description: 用一个约 130 行、无需框架的 Python 文件从零实现最小 agent harness：上下文组装、模型调用、工具解析与执行、结果回写、人工审批五个环节逐一拆解，再沿"什么症状加什么组件"的路径把 todo 规划、记忆压缩、子代理、观测逐个挂载上去。
 ---

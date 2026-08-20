@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 精选资源清单
 description: 一份策展式而非罗列式的 Agent Harness 阅读地图：只收录一手、有立场的工程博客、开源实现、协议规范与论文入口，每条都注明为什么值得读、什么时候读。
 ---

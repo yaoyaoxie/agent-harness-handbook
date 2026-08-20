@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 什么是 Agent Harness
 description: Agent Harness（智能体挽具）是包裹 LLM 的完整系统：上下文、工具、循环、记忆与护栏。本文给出精确定义、词源考据、与 model/agent/framework/scaffolding/wrapper 的辨析，以及 harness 决定 agent 能力上限的实证。
 ---

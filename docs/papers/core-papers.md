@@ -1,4 +1,5 @@
 ---
+recommended: true
 title: 经典论文精读
 description: 精读 7 篇塑造 Agent Harness 设计范式的经典论文：ReAct、MRKL、Toolformer、Reflexion、Generative Agents、Voyager、SWE-agent，讲透机制、数据与对系统设计的启示。
 ---
