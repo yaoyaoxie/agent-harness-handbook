@@ -1,14 +1,14 @@
 ---
 title: 前沿进展
 dataAsOf: 2026-08
-description: 梳理 2025–2026 年 Agent Harness 研究的六条前沿主线：长时程执行、上下文工程、记忆基础设施、多智能体协作、自我改进 agent 与评测纪律，逐篇标注问题、方法与对 harness 设计的启示。
+description: 梳理 2025–2026 年 Agent Harness 研究的七条前沿主线：长时程执行、上下文工程、记忆基础设施、多智能体协作、自我改进 agent、训练内生化与评测纪律，逐篇标注问题、方法与对 harness 设计的启示。
 ---
 
 # 前沿进展
 
 [经典论文](/papers/core-papers)讲的是 2022–2024 年：harness 的组件被逐个发明——循环、工具、记忆、规划、接口。2025 年之后，研究问题换了一个方向：**组件都在了，但它们能在几小时、几天的任务里可靠地协同工作吗？** 失败分析取代了能力演示，上下文从提示技巧升格为系统学科，harness 本身甚至成了被优化和被比较的对象。
 
-本页按主题梳理六条主线，每条给出代表性工作（问题、方法一句话、与 harness 设计的关系）和本站的独立判断。所有 arXiv 编号与发布日期均已核实。
+本页按主题梳理七条主线，每条给出代表性工作（问题、方法一句话、与 harness 设计的关系）和本站的独立判断。所有 arXiv 编号与发布日期均已核实。
 
 ```text
 2025.02  A-MEM ──────────────── 记忆结构化：笔记 + 链接 + 演化
@@ -23,6 +23,7 @@ description: 梳理 2025–2026 年 Agent Harness 研究的六条前沿主线：
 2025.10  ACE ────────────────── 上下文即 playbook，自我进化
 2025.12  RLM / Confucius CCA ── 上下文即环境；scaffold 价值被量化
 2026.05  Harness 披露檄文 ───── 不披露 harness 的分数不可比较
+2026.08  Agent Lightning / LEGO-RL ── 训练住进了骨架（Harness-Native RL）
 ```
 
 ## 长时程 Agent：从"答得对"到"撑得久"
@@ -107,6 +108,22 @@ description: 梳理 2025–2026 年 Agent Harness 研究的六条前沿主线：
 
 对 harness 工程的推论是深远的：**harness 的代码、提示词、工具描述都是可被自动搜索优化的对象**——手写 harness 的先验优势正在消失，但"评估改进是否真实"的设施（可靠的本地 benchmark、轨迹审计）变成了新的护城河，见[可观测性](/components/observability)。
 
+## 训练住进了骨架：Harness-Native RL
+
+2026 年 8 月中旬，arXiv 上密集出现一簇论文，把 harness 从「推理时的外壳」变成「训练时的环境」——模型不再只是被 harness 围着跑，而是在 harness 里被训练。三天内至少三篇：
+
+**Agent Lightning v1.0**（*Towards Harnessed Agentic RL*，arXiv:2608.17528，2026 年 8 月 18 日）。问题：给 agent 做 RL 通常要求把 agent 代码围着训练框架改写，harness 一换就得重来。方法：解耦架构——用一个 LLM 端点代理把**任意** agent 接进 RL 训练回路，agent 代码不用动。论文称其初代方案已被 verl Uni-Agent、AReaL 2.0、slime、Polar 等训练框架采用。
+
+**LEGO-RL**（*Harness-Native Reinforcement Learning for Coding Agents*，arXiv:2608.17393，同日）。问题：coding agent 的 RL 越来越依赖长时间运行的真实 harness，但 harness 的原生执行环境与策略梯度训练天然错位——环境崩溃和 reward hacking 会污染结果信号，训推不一致又让 rollout 失真。方法：把训练直接做成 harness-native 的，在真实 harness 里对齐训练与推理。
+
+**ClawGym II**（arXiv:2608.16798，8 月 17 日）走了第三条路：不改 harness、不看内部状态，把整套骨架当**黑盒环境**做 RL，专攻长时程任务上"穿过复杂 harness 训练难以扩展"的问题。
+
+::: info 独立判断
+5 月的[披露檄文](https://arxiv.org/abs/2605.23950)证明了「同一模型换 harness 分数不同」，8 月这一簇论文是顺理成章的下一步：**既然 harness 决定表现，那就让模型在最真实的 harness 里学习**。对从业者的含义很直接——你写的 harness 不再只是部署资产，它开始参与决定模型能学成什么样；harness 的稳定性（崩溃率、信号干净程度）从工程指标变成了训练指标。
+:::
+
+同一周还有三篇值得扫一眼：**Demystifying Agent Skills**（arXiv:2608.14036，8 月 14 日）用受控实验回答「skills 什么时候有用、为什么有用、在哪失效」，正好给本站 [Skills](/components/skills) 一页提供实证对照；**AgentRewind**（arXiv:2608.14380，8 月 14 日）处理长时程执行的可恢复性——早期错误会同时污染上下文和环境状态，靠后续动作往往救不回来，需要可回滚的执行；**HarnessRisk**（arXiv:2608.17597，8 月 18 日）则是第一个按 harness 职责（工具、扩展、持久状态、权限、外部动作）组织的全生命周期安全基准，把[权限与安全](/components/permissions)从最佳实践推向了可测量。
+
 ## 评测：从分数到纪律
 
 2025 年后的评测研究有两条平行线：更难的新基准，和对"分数本身可信度"的系统性拷问。
@@ -125,12 +142,13 @@ description: 梳理 2025–2026 年 Agent Harness 研究的六条前沿主线：
 读 2025 年后的任何 agent 论文或榜单，先做三次检查：harness 披露了吗？报告的是单次还是 pass^k？失败案例分析了吗？三个里缺两个，数字就只能当广告看。这条纪律同样适用于你自己搭 harness 时的自测，见[设计原则](/practice/design-principles)。
 :::
 
-## 六条主线合起来看
+## 七条主线合起来看
 
 - **长时程**告诉我们瓶颈在执行可靠性与错误复合，不在单步聪明；
 - **上下文工程**与**记忆**回答"信息怎么进、怎么留"；
 - **多智能体**的冷水提醒我们：并行化收益必须跑赢协调成本；
 - **自我改进**把 harness 变成优化对象，同时抬高了验证设施的地位；
+- **训练内生化**更进一步：harness 从部署外壳变成训练环境，骨架的工程质量开始直接塑造模型能力；
 - **评测纪律**则给以上全部主张提供了判据。
 
 一个贯穿性的观察：2022–2024 年的论文问"模型能做什么"，2025–2026 年的论文问"**系统在多长时间尺度上、以什么成本、可被验证地做什么**"。研究重心从能力秀变成了工程问责——这本身就是 harness 视角的胜利。
@@ -174,3 +192,9 @@ description: 梳理 2025–2026 年 Agent Harness 研究的六条前沿主线：
 - [HAL: Holistic Agent Leaderboard（Princeton）](https://github.com/princeton-pli/hal-harness)
 - [Confucius Code Agent (arXiv:2512.10398)](https://arxiv.org/abs/2512.10398)
 - [Stop Comparing LLM Agents Without Disclosing the Harness (arXiv:2605.23950)](https://arxiv.org/abs/2605.23950)
+- [Agent Lightning v1.0: Towards Harnessed Agentic RL (arXiv:2608.17528)](https://arxiv.org/abs/2608.17528)
+- [LEGO-RL: Harness-Native Reinforcement Learning for Coding Agents (arXiv:2608.17393)](https://arxiv.org/abs/2608.17393)
+- [ClawGym II: Exploring Black-Box RL on Agent Harness (arXiv:2608.16798)](https://arxiv.org/abs/2608.16798)
+- [Demystifying Agent Skills: Why They Work—Until They Don't (arXiv:2608.14036)](https://arxiv.org/abs/2608.14036)
+- [AgentRewind: Recoverable Execution for Long-Horizon LLM Agents (arXiv:2608.14380)](https://arxiv.org/abs/2608.14380)
+- [HarnessRisk: A Lifecycle-Oriented Benchmark for Agent Harness Safety (arXiv:2608.17597)](https://arxiv.org/abs/2608.17597)
