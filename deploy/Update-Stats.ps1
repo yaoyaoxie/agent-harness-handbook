@@ -45,6 +45,8 @@ $ipPV     = @{}
 $firstSeen = @{}   # IP -> 首次出现日期 key
 $topPages = @{}
 $referers = @{}
+$utmPV    = @{}   # utm_source -> PV
+$utmIPs   = @{}   # utm_source -> IP 集合
 $directCnt = 0
 $hourly   = @{}
 $recent   = New-Object System.Collections.Generic.List[object]
@@ -109,6 +111,14 @@ Get-Content $logPath | ForEach-Object {
             $hh = [int]$timeL.Substring(12, 2)
             if (-not $hourly.ContainsKey($hh)) { $hourly[$hh] = 0 }
             $hourly[$hh]++
+        }
+
+        # UTM 渠道标记
+        if ($uri -match '[?&]utm_source=([^&]+)') {
+            $utm = [System.Web.HttpUtility]::UrlDecode($Matches[1])
+            if (-not $utmPV.ContainsKey($utm)) { $utmPV[$utm] = 0; $utmIPs[$utm] = @{} }
+            $utmPV[$utm]++
+            $utmIPs[$utm][$ip] = $true
         }
 
         if ($ref -eq '-') {
@@ -291,6 +301,14 @@ foreach ($k in @('微信内置浏览器', '移动端（非微信）', '桌面端
     $devRows.Add(("<tr><td>{0}</td><td class='num'>{1}</td><td class='num'>{2}</td><td class='barcell'><div class='bar' style='width:{3}%'></div></td><td class='num muted'>{3}%</td></tr>" -f $k, $devPV[$k], $devIPs[$k].Count, $share))
 }
 
+# 渠道分布（UTM）
+$utmRows = New-Object System.Collections.Generic.List[string]
+$i = 0
+foreach ($kv in ($utmPV.GetEnumerator() | Sort-Object Value -Descending | Select-Object -First 15)) {
+    $i++
+    $utmRows.Add(("<tr><td class='num'>{0}</td><td class='path'>{1}</td><td class='num'>{2}</td><td class='num'>{3}</td></tr>" -f $i, [System.Web.HttpUtility]::HtmlEncode($kv.Key), $kv.Value, $utmIPs[$kv.Key].Count))
+}
+
 # 访客来源
 $refRows = New-Object System.Collections.Generic.List[string]
 $i = 0
@@ -395,6 +413,11 @@ $html = @"
   <table>
     <tr><th>场景</th><th class="num">PV</th><th class="num">访客数</th><th></th><th class="num">占比</th></tr>
     $($devRows -join "`n")
+  </table>
+  <h2>渠道分布 <span class="muted" style="font-weight:400;font-size:12px">（UTM 标记，链接带 ?utm_source=xxx 才计入）</span></h2>
+  <table>
+    <tr><th class="num">#</th><th>渠道</th><th class="num">PV</th><th class="num">访客数</th></tr>
+    $($utmRows -join "`n")
   </table>
   <h2>访客来源</h2>
   <table>
