@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress'
 // 部署到 GitHub Pages 项目页时由 CI 注入（如 /repo-name/）；本地开发与预览保持 /
 const base = process.env.VITEPRESS_BASE || '/'
 // TODO(部署后替换): 改成站点的最终公网地址，用于 sitemap 与 og:url
-const siteUrl = process.env.SITE_URL || 'https://agent-harness-handbook.edgeone.dev'
+const siteUrl = process.env.SITE_URL || 'https://harness.zhigouread.com'
 
 export default defineConfig({
   lang: 'zh-CN',
