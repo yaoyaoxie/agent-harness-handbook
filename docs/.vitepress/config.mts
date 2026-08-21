@@ -120,6 +120,7 @@ export default defineConfig({
                 { text: 'OpenHands', link: '/case-studies/openhands' },
                 { text: 'Aider', link: '/case-studies/aider' },
                 { text: 'Devin', link: '/case-studies/devin' },
+                { text: 'Codex', link: '/case-studies/codex' },
                 { text: 'LangGraph', link: '/case-studies/langgraph' }
               ]
             },
