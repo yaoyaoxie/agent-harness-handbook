@@ -26,18 +26,7 @@ ssh -i "$SSH_KEY" "$SERVER" "Get-ChildItem $REMOTE_WEBROOT | Remove-Item -Recurs
 echo "==> 4/5 刷新访问统计"
 ssh -i "$SSH_KEY" "$SERVER" "powershell -ExecutionPolicy Bypass -File C:\\stats\\Update-Stats.ps1" || true
 
-echo "==> 5/5 百度主动推送（新站每日配额 10 条，增量推送）"
-PUSHED_FILE=deploy/.baidu-pushed.txt
-touch "$PUSHED_FILE"
-curl -s https://harness.zhigouread.com/sitemap.xml | grep -oE '<loc>[^<]+</loc>' | sed 's/<[^>]*>//g' > /tmp/baidu-all-urls.txt
-grep -vxF -f "$PUSHED_FILE" /tmp/baidu-all-urls.txt | head -10 > /tmp/baidu-todo.txt || true
-if [ -s /tmp/baidu-todo.txt ]; then
-  RESP=$(curl -s -X POST -H 'Content-Type: text/plain' --data-binary @/tmp/baidu-todo.txt \
-    'http://data.zz.baidu.com/urls?site=https://harness.zhigouread.com&token=2EfqpAoBWjScvkZG')
-  echo "百度推送结果: $RESP"
-  echo "$RESP" | grep -q '"success"' && cat /tmp/baidu-todo.txt >> "$PUSHED_FILE"
-else
-  echo "无新增 URL 需要推送"
-fi
+echo "==> 5/5 收录推送（百度主动推送 + IndexNow，服务器执行）"
+ssh -i "$SSH_KEY" "$SERVER" "powershell -ExecutionPolicy Bypass -File C:\\stats\\Push-Baidu.ps1" || true
 
 echo "==> 发布完成: https://harness.zhigouread.com （统计: /stats/）"
