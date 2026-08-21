@@ -47,14 +47,9 @@ $subject = "【告警】harness.zhigouread.com 健康巡检发现 $($problems.Co
 $body = "发现时间：" + (Get-Date).ToString('yyyy-MM-dd HH:mm:ss') + "`n`n" + ($problems -join "`n") + "`n`n请尽快检查服务器（ssh -i ~/.ssh/id_ed25519 Administrator@43.156.82.156）"
 
 try {
+    . C:\stats\Send-SmtpMail.ps1
     $cfg = Get-Content $cfgPath -Raw | ConvertFrom-Json
-    $mail = New-Object System.Net.Mail.MailMessage($cfg.user, $cfg.to, $subject, $body)
-    $mail.BodyEncoding = [System.Text.Encoding]::UTF8
-    $mail.SubjectEncoding = [System.Text.Encoding]::UTF8
-    $smtp = New-Object System.Net.Mail.SmtpClient($cfg.host, [int]$cfg.port)
-    $smtp.EnableSsl = $true
-    $smtp.Credentials = New-Object System.Net.NetworkCredential($cfg.user, $cfg.pass)
-    $smtp.Send($mail)
+    Send-SmtpMail -To $cfg.to -Subject $subject -Body $body | Out-Null
     Write-Output ("alert sent: " + ($problems -join '; '))
 } catch {
     Write-Output ("PROBLEMS (mail failed): " + ($problems -join '; ') + " | " + $_.Exception.Message)

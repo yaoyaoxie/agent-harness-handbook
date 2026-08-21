@@ -73,13 +73,8 @@ $body = @"
 "@
 
 try {
-    $mail = New-Object System.Net.Mail.MailMessage($cfg.user, $cfg.to, $subject, $body)
-    $mail.BodyEncoding = [System.Text.Encoding]::UTF8
-    $mail.SubjectEncoding = [System.Text.Encoding]::UTF8
-    $smtp = New-Object System.Net.Mail.SmtpClient($cfg.host, [int]$cfg.port)
-    $smtp.EnableSsl = $true
-    $smtp.Credentials = New-Object System.Net.NetworkCredential($cfg.user, $cfg.pass)
-    $smtp.Send($mail)
+    . C:\stats\Send-SmtpMail.ps1
+    Send-SmtpMail -To $cfg.to -Subject $subject -Body $body | Out-Null
     Write-Output "weekly report sent: PV=$pv7 UV=$uv7"
 } catch {
     Write-Output ("mail error: " + $_.Exception.Message)
