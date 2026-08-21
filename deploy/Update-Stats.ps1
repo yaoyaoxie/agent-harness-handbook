@@ -1,14 +1,39 @@
-﻿# Update-Stats.ps1 v2 — 解析 Nginx access.log，生成网站访问统计看板
-# 流量分三类：真实访客（计入 PV/UV）/ 爬虫扫描（单列）/ 系统流量（证书验证、本机自检，忽略）
-# 每小时由计划任务调用，也可手动执行：powershell -ExecutionPolicy Bypass -File C:\stats\Update-Stats.ps1
+﻿# Update-Stats.ps1 v3 — 解析 Nginx access.log，生成网站访问统计看板
+# 流量三分：真实访客（计入 PV/UV）/ 爬虫扫描（单列）/ 系统流量（忽略）
+# v3 新增：访客地域分布（GeoIP，结果缓存到 geo-cache.json，每个 IP 只查一次）
+# 每 5 分钟由计划任务调用，也可手动执行：powershell -ExecutionPolicy Bypass -File C:\stats\Update-Stats.ps1
 
-$logPath = "C:\nginx\logs\access.log"
-$outDir  = "C:\web\stats"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+$logPath   = "C:\nginx\logs\access.log"
+$outDir    = "C:\web\stats"
+$cacheFile = "C:\stats\geo-cache.json"
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 
 if (-not (Test-Path $logPath)) {
     "no log" | Out-File "$outDir\index.html" -Encoding utf8
     exit 0
+}
+
+# ===== GeoIP 缓存 =====
+$geo = @{}   # IP -> 地域标签
+if (Test-Path $cacheFile) {
+    try {
+        $cacheData = Get-Content $cacheFile -Raw -Encoding UTF8 | ConvertFrom-Json
+        if ($cacheData -and -not ($cacheData -is [array])) { $cacheData = @($cacheData) }
+        foreach ($c in $cacheData) { $geo[$c.IP] = $c.Label }
+    } catch { }
+}
+
+function GeoLabel($country, $region, $city) {
+    if ($country -eq '中国' -or $country -eq 'China') {
+        if ($city -and $region -and $city -ne $region) { return "$region $city" }
+        if ($city) { return $city }
+        if ($region) { return $region }
+        return '中国'
+    }
+    if ($country) { return $country }
+    return '未知'
 }
 
 # access.log 格式（nginx main）：
@@ -20,10 +45,11 @@ $selfIPs = @{ '127.0.0.1' = $true; '43.156.82.156' = $true }
 
 $daily    = @{}   # 日期 -> @{ Req; PV; IPs; Noise }
 $allIPs   = @{}   # 全站累计去重 IP（真实访客）
-$topPages = @{}   # 路径 -> PV
-$referers = @{}   # 来源域名 -> 次数
-$directCnt = 0    # 直接访问（无 referer）
-$hourly   = @{}   # 今日小时 -> PV
+$ipPV     = @{}   # IP -> 累计 PV（用于地域统计）
+$topPages = @{}
+$referers = @{}
+$directCnt = 0
+$hourly   = @{}
 $recent   = New-Object System.Collections.Generic.List[object]
 $totalReq = 0
 $noiseReq = 0
@@ -38,30 +64,30 @@ function DayKey($d) {  # "21/Aug/2026" -> "2026-08-21"
 Get-Content $logPath | ForEach-Object {
     if ($_ -match $pattern) {
         $ip     = $Matches[1]
-        $timeL  = $Matches[2]                 # 21/Aug/2026:16:43:34 +0800
+        $timeL  = $Matches[2]
         $method = $Matches[3]
         $uri    = $Matches[4]
         $status = $Matches[5]
         $ref    = $Matches[7]
         $ua     = $Matches[8]
 
-        $day    = $timeL.Substring(0, 11)
+        $day = $timeL.Substring(0, 11)
         if (-not $daily.ContainsKey($day)) {
             $daily[$day] = @{ Req = 0; PV = 0; IPs = @{}; Noise = 0 }
         }
         $daily[$day].Req++
         $totalReq++
 
-        # —— 系统流量：证书验证、本机自检，直接忽略 ——
+        # —— 系统流量：证书验证、本机自检 ——
         if ($uri -like '/.well-known/*' -or $selfIPs.ContainsKey($ip)) { return }
 
-        # —— 页面访问判定：GET + 200 + 非静态资源 ——
+        # —— 页面访问判定 ——
         $isPage = ($method -eq "GET") -and ($status -eq "200") -and `
                   ($uri -notmatch '\.(js|css|png|jpe?g|gif|svg|ico|webp|woff2?|ttf|map|xml|txt|json|zip|webmanifest|pdf)(\?|$)') -and `
                   ($uri -notlike '/assets/*')
         if (-not $isPage) { return }
 
-        # —— 爬虫/扫描：计入噪音，不计入 PV/UV ——
+        # —— 爬虫/扫描 ——
         if ($ua -match $botRe) {
             $daily[$day].Noise++
             $noiseReq++
@@ -72,6 +98,8 @@ Get-Content $logPath | ForEach-Object {
         $daily[$day].PV++
         $daily[$day].IPs[$ip] = $true
         $allIPs[$ip] = $true
+        if (-not $ipPV.ContainsKey($ip)) { $ipPV[$ip] = 0 }
+        $ipPV[$ip]++
 
         $path = ($uri -split '\?')[0]
         if (-not $topPages.ContainsKey($path)) { $topPages[$path] = 0 }
@@ -102,6 +130,53 @@ Get-Content $logPath | ForEach-Object {
     }
 }
 
+# ===== GeoIP 查询（仅缓存里没有的 IP，每次运行最多查 40 个）=====
+$lookupCount = 0
+foreach ($ip in @($allIPs.Keys)) {
+    if (-not $geo.ContainsKey($ip)) {
+        if ($lookupCount -ge 40) { break }
+        $lookupCount++
+        try {
+            $r = Invoke-RestMethod -Uri "http://ip-api.com/json/${ip}?lang=zh-CN&fields=status,country,regionName,city" -TimeoutSec 5
+            if ($r.status -eq 'success') {
+                $geo[$ip] = GeoLabel $r.country $r.regionName $r.city
+            } else {
+                $geo[$ip] = '未知'
+            }
+        } catch {
+            $geo[$ip] = '未知'
+        }
+        Start-Sleep -Milliseconds 150
+    }
+}
+
+# 保存缓存
+$cacheOut = @()
+foreach ($k in $geo.Keys) { $cacheOut += [PSCustomObject]@{ IP = $k; Label = $geo[$k] } }
+if ($cacheOut.Count -gt 0) {
+    @($cacheOut) | ConvertTo-Json -Depth 3 | Out-File $cacheFile -Encoding utf8
+}
+
+function Get-Geo($ip) {
+    if ($geo.ContainsKey($ip)) { return $geo[$ip] }
+    return '待识别'
+}
+
+# ===== 地域分布（按 UV 排序，Top 10）=====
+$geoStat = @{}   # 地域 -> @{ UV; PV }
+foreach ($ip in $allIPs.Keys) {
+    $label = Get-Geo $ip
+    if (-not $geoStat.ContainsKey($label)) { $geoStat[$label] = @{ UV = 0; PV = 0 } }
+    $geoStat[$label].UV++
+    $geoStat[$label].PV += $ipPV[$ip]
+}
+$geoRows = New-Object System.Collections.Generic.List[string]
+$i = 0
+foreach ($kv in ($geoStat.GetEnumerator() | Sort-Object { $_.Value.PV } -Descending | Select-Object -First 10)) {
+    $i++
+    $geoRows.Add(("<tr><td class='num'>{0}</td><td>{1}</td><td class='num'>{2}</td><td class='num'>{3}</td></tr>" -f $i, [System.Web.HttpUtility]::HtmlEncode($kv.Key), $kv.Value.UV, $kv.Value.PV))
+}
+
 # ===== 聚合 =====
 $todayPV = 0; $todayUV = 0; $totalPV = 0
 $rows = New-Object System.Collections.Generic.List[string]
@@ -125,7 +200,7 @@ $rows.Reverse()
 $recent30 = $sortedDays | Select-Object -Last 30
 $pv30 = 0; foreach ($d in $recent30) { $pv30 += $daily[$d].PV }
 
-# 今日分时段（0-23 点）
+# 今日分时段
 $hourCells = New-Object System.Collections.Generic.List[string]
 $maxH = 1
 foreach ($h in $hourly.Keys) { if ($hourly[$h] -gt $maxH) { $maxH = $hourly[$h] } }
@@ -143,7 +218,7 @@ foreach ($kv in ($topPages.GetEnumerator() | Sort-Object Value -Descending | Sel
     $pageRows.Add(("<tr><td class='num'>{0}</td><td class='path'>{1}</td><td class='num'>{2}</td></tr>" -f $i, [System.Web.HttpUtility]::HtmlEncode($kv.Key), $kv.Value))
 }
 
-# 来源分析 Top 10（含直接访问）
+# 访客来源
 $refRows = New-Object System.Collections.Generic.List[string]
 $i = 0
 if ($directCnt -gt 0) {
@@ -154,14 +229,14 @@ foreach ($kv in ($referers.GetEnumerator() | Sort-Object Value -Descending | Sel
     $refRows.Add(("<tr><td class='num'>{0}</td><td class='path'>{1}</td><td class='num'>{2}</td></tr>" -f $i, [System.Web.HttpUtility]::HtmlEncode($kv.Key), $kv.Value))
 }
 
-# 最近访问 20 条
+# 最近访问 20 条（含地域）
 $recentRows = New-Object System.Collections.Generic.List[string]
 $tail = $recent | Select-Object -Last 20
-$tail = $tail[($tail.Count - 1)..0]  # 倒序：最新在前
+$tail = $tail[($tail.Count - 1)..0]
 foreach ($v in $tail) {
     $uaShort = $v.UA
-    if ($uaShort.Length -gt 45) { $uaShort = $uaShort.Substring(0, 45) + '…' }
-    $recentRows.Add(("<tr><td class='muted'>{0}</td><td class='path'>{1}</td><td class='path'>{2}</td><td class='muted ua'>{3}</td></tr>" -f $v.Time, $v.IP, [System.Web.HttpUtility]::HtmlEncode($v.URI), [System.Web.HttpUtility]::HtmlEncode($uaShort)))
+    if ($uaShort.Length -gt 40) { $uaShort = $uaShort.Substring(0, 40) + '…' }
+    $recentRows.Add(("<tr><td class='muted'>{0}</td><td class='path'>{1}</td><td>{2}</td><td class='path'>{3}</td><td class='muted ua'>{4}</td></tr>" -f $v.Time, $v.IP, [System.Web.HttpUtility]::HtmlEncode((Get-Geo $v.IP)), [System.Web.HttpUtility]::HtmlEncode($v.URI), [System.Web.HttpUtility]::HtmlEncode($uaShort)))
 }
 
 $generatedAt = (Get-Date).ToString('yyyy-MM-dd HH:mm:ss')
@@ -194,7 +269,7 @@ $html = @"
   .bar { height: 10px; background: #4a7ddb; border-radius: 5px; min-width: 1px; }
   .path { font-family: ui-monospace, monospace; font-size: 12px; }
   .muted { color: #8a94a6; }
-  .ua { font-size: 11px; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ua { font-size: 11px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .hchart { display: flex; align-items: flex-end; gap: 3px; background: #fff; border-radius: 10px; padding: 18px 16px 10px; box-shadow: 0 1px 3px rgba(0,0,0,.06); }
   .hcol { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; }
   .hbar { width: 70%; background: #4a7ddb; border-radius: 3px 3px 0 0; }
@@ -205,7 +280,7 @@ $html = @"
 <body>
 <div class="wrap">
   <h1>访问统计 · Agent Harness 手册</h1>
-  <div class="sub">数据来源：服务器 Nginx 访问日志 · 每小时更新 · 生成于 $generatedAt</div>
+  <div class="sub">数据来源：服务器 Nginx 访问日志 · 每 5 分钟更新 · 生成于 $generatedAt</div>
   <div class="cards">
     <div class="card"><div class="label">今日页面浏览量（PV）</div><div class="value">$todayPV</div></div>
     <div class="card"><div class="label">今日访客数（UV）</div><div class="value">$todayUV</div></div>
@@ -213,6 +288,11 @@ $html = @"
     <div class="card"><div class="label">累计 PV <em>/ 累计访客</em></div><div class="value">$totalPV <em>/ $($allIPs.Count)</em></div></div>
     <div class="card noise"><div class="label">已过滤爬虫/扫描</div><div class="value">$noiseReq</div></div>
   </div>
+  <h2>访客地域分布</h2>
+  <table>
+    <tr><th class="num">#</th><th>地域</th><th class="num">访客数</th><th class="num">PV</th></tr>
+    $($geoRows -join "`n")
+  </table>
   <h2>今日分时段</h2>
   <div class="hchart">
     $($hourCells -join "`n")
@@ -234,12 +314,13 @@ $html = @"
   </table>
   <h2>最近访问</h2>
   <table>
-    <tr><th>时间</th><th>IP</th><th>页面</th><th>UA</th></tr>
+    <tr><th>时间</th><th>IP</th><th>地域</th><th>页面</th><th>UA</th></tr>
     $($recentRows -join "`n")
   </table>
   <div class="note">
     PV = 真实访客的页面浏览量（不含静态资源，已排除爬虫、扫描器和证书验证等系统流量）；UV = 独立访客数（按 IP 去重，同一网络出口多人计为 1）。<br>
-    爬虫/噪音 = UA 含 bot/curl/scanner 等特征的页面访问；总请求 = 含静态资源的全部请求。服务端日志统计不受广告拦截器影响，也无法被「拒绝 Cookie」漏计。
+    地域由免费 GeoIP 服务（ip-api.com）按 IP 查询，中国境内精确到省/城市（运营商级近似，移动网络可能定位到省会城市）；每个 IP 只查询一次并本地缓存。<br>
+    爬虫/噪音 = UA 含 bot/curl/scanner 等特征的页面访问；总请求 = 含静态资源的全部请求。服务端日志统计不受广告拦截器影响。
   </div>
 </div>
 </body>
@@ -247,4 +328,4 @@ $html = @"
 "@
 
 $html | Out-File "$outDir\index.html" -Encoding utf8
-Write-Output "stats v2 updated: $todayKey PV=$todayPV UV=$todayUV totalPV=$totalPV noise=$noiseReq"
+Write-Output "stats v3 updated: $todayKey PV=$todayPV UV=$todayUV totalPV=$totalPV noise=$noiseReq geoIPs=$($geo.Count) newLookups=$lookupCount"
